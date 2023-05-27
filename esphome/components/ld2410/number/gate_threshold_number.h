@@ -8,8 +8,7 @@ namespace ld2410 {
 
 class GateThresholdNumber : public number::Number, public Parented<LD2410Component> {
  public:
-  GateThresholdNumber() = default;
-  void set_gate(uint8_t gate);
+  GateThresholdNumber(uint8_t gate);
 
  protected:
   uint8_t gate_;

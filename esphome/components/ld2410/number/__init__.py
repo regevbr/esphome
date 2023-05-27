@@ -2,6 +2,7 @@ import esphome.codegen as cg
 from esphome.components import number
 import esphome.config_validation as cv
 from esphome.const import (
+    CONF_ID,
     CONF_TIMEOUT,
     DEVICE_CLASS_DISTANCE,
     DEVICE_CLASS_SIGNAL_STRENGTH,
@@ -135,16 +136,18 @@ async def to_code(config):
         move = CONF_MOVE_THRESHOLDS[x]
         still = CONF_STILL_THRESHOLDS[x]
         if move in config:
-            n = await number.new_number(
-                config[move], min_value=0, max_value=100, step=1
+            move_config = config[move]
+            n = cg.new_Pvariable(move_config[CONF_ID], x)
+            await number.register_number(
+                n, move_config, min_value=0, max_value=100, step=1
             )
             await cg.register_parented(n, config[CONF_LD2410_ID])
-            cg.add(n.set_gate(x))
             cg.add(ld2410_component.set_gate_move_threshold_number(x, n))
         if still in config:
-            n = await number.new_number(
-                config[still], min_value=0, max_value=100, step=1
+            still_config = config[still]
+            n = cg.new_Pvariable(still_config[CONF_ID], x)
+            await number.register_number(
+                n, still_config, min_value=0, max_value=100, step=1
             )
             await cg.register_parented(n, config[CONF_LD2410_ID])
-            cg.add(n.set_gate(x))
             cg.add(ld2410_component.set_gate_still_threshold_number(x, n))
