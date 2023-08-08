@@ -14,6 +14,8 @@
 namespace esphome {
 namespace ld2410 {
 
+static const char *const TAG = "ld2410";
+
 LD2410Component::LD2410Component() {}
 
 void LD2410Component::dump_config() {

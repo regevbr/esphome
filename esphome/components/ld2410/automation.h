@@ -13,9 +13,7 @@ template<typename... Ts> class BluetoothPasswordSetAction : public Action<Ts...>
   TEMPLATABLE_VALUE(std::string, password)
 
   void play(Ts... x) override {
-    auto call = this->ld2410_comp_->make_call();
-    call.set_password(this->password_.value(x...));
-    call.perform();
+    this->ld2410_comp_->set_bluetooth_password(this->password_.value(x...));
   }
 
  protected:
